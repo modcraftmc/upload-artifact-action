@@ -1,6 +1,6 @@
-name: 'Put file with POST request'
+name: 'Put file with POST request - custom modcraft'
 description: 'Put file with POST request to REST api'
-author: 'Jant Hsueh(薛瑄) & Tomasz Scislowicz'
+author: 'Jant Hsueh(薛瑄) & Tomasz Scislowicz & moi'
 branding:
   icon: arrow-right-circle
   color: gray-dark
