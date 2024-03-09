@@ -10,13 +10,14 @@ async function main() {
     const forms = core.getInput('forms');
     const formsMap = jsonToMap(forms);
     const fileForms = core.getInput('fileForms');
+	const authorization = core.getInput('authorization');
     const fileFormsMap = jsonToMap(fileForms);
 
     console.log(forms);
     console.log(fileForms);
 
     // http request to external API
-    const response = await uploadFile(url, formsMap, fileFormsMap);
+    const response = await uploadFile(url, formsMap, fileFormsMap, authorization);
 
     const statusCode = response.status;
     const data = response.data;
