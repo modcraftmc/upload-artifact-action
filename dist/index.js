@@ -29423,17 +29423,18 @@ async function getFormHeaders (form) {
   const len = await getLen();
   return {
     ...form.getHeaders(),
-    'Content-Length': len
+    'Content-Length': len,
   }
 }
 
-async function uploadFile(url, forms, fileForms) {
-    console.log(url);
-    console.log(forms);
-    console.log(fileForms);
+async function uploadFile(url, forms, fileForms, bearerAuthorization) {
     const form = buildForm(forms, fileForms);
     const headers = await getFormHeaders(form);
-    console.log(headers);
+    if (bearerAuthorization) {
+      headers['Authorization'] = `Bearer ${bearerAuthorization}`;
+    }
+
+    console.log("Uploading file to " + url + " with headers: " + JSON.stringify(headers) + " and form: " + JSON.stringify(form));
     return axios.post(url, form, {headers: headers, maxContentLength: Infinity, maxBodyLength: Infinity,})
 }
 
@@ -31365,14 +31366,8 @@ async function main() {
     const fileFormsMap = jsonToMap(fileForms);
 	  const bearerAuthorization = core.getInput('bearerAuthorization');
 
-    if(bearerAuthorization !== '')
-      formsMap.set("Authorization", "Bearer " + bearerAuthorization);
-
-    console.log(forms);
-    console.log(fileForms);
-
     // http request to external API
-    const response = await uploadFile(url, formsMap, fileFormsMap);
+    const response = await uploadFile(url, formsMap, fileFormsMap, bearerAuthorization);
 
     const statusCode = response.status;
     const data = response.data;
@@ -31393,7 +31388,7 @@ async function main() {
       core.setOutput('output', outputJSON);
     }
   } catch (error) {
-    console.log(error);
+    console.log("error : " + error);
     core.setFailed(error.message);
   }
 }

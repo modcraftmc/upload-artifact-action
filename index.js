@@ -13,14 +13,8 @@ async function main() {
     const fileFormsMap = jsonToMap(fileForms);
 	  const bearerAuthorization = core.getInput('bearerAuthorization');
 
-    if(bearerAuthorization !== '')
-      formsMap.set("Authorization", "Bearer " + bearerAuthorization);
-
-    console.log(forms);
-    console.log(fileForms);
-
     // http request to external API
-    const response = await uploadFile(url, formsMap, fileFormsMap);
+    const response = await uploadFile(url, formsMap, fileFormsMap, bearerAuthorization);
 
     const statusCode = response.status;
     const data = response.data;
@@ -41,7 +35,7 @@ async function main() {
       core.setOutput('output', outputJSON);
     }
   } catch (error) {
-    console.log(error);
+    console.log("error : " + error);
     core.setFailed(error.message);
   }
 }
