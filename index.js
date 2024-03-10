@@ -13,7 +13,8 @@ async function main() {
     const fileFormsMap = jsonToMap(fileForms);
 	  const bearerAuthorization = core.getInput('bearerAuthorization');
 
-    formsMap.set("Authorization", "Bearer " + bearerAuthorization);
+    if(bearerAuthorization !== '')
+      formsMap.set("Authorization", "Bearer " + bearerAuthorization);
 
     console.log(forms);
     console.log(fileForms);

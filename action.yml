@@ -14,9 +14,11 @@ inputs:
     default: POST
   forms:
     description: Data to be transmitted,such as key, pwd, etc. Use json format
+    default: '{}'
     required: false
   fileForms:
     description: Files to be transferred,such as 'file','image' etc. Use json format
+    default: '{}'
     required: false
   bearerAuthorization:
     description: 'Bearer token for authorization'
