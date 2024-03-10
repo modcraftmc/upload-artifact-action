@@ -33,7 +33,7 @@ async function uploadFile(url, forms, fileForms) {
     const form = buildForm(forms, fileForms);
     const headers = await getFormHeaders(form);
     console.log(headers);
-    return axios.post(url, form, {headers: headers,maxContentLength: Infinity})
+    return axios.post(url, form, {headers: headers, maxContentLength: Infinity, maxBodyLength: Infinity,})
 }
 
 
