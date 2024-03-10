@@ -10,7 +10,7 @@ async function main() {
     const forms = core.getInput('forms');
     const formsMap = jsonToMap(forms);
     const fileForms = core.getInput('fileForms');
-	const authorization = core.getInput('authorization');
+	  const authorization = core.getInput('authorization');
     const fileFormsMap = jsonToMap(fileForms);
 
     console.log(forms);
