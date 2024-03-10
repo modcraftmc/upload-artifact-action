@@ -29418,22 +29418,21 @@ function buildForm(forms, fileForms) {
     return form
 }
 
-async function getFormHeaders (form, authorization) {
+async function getFormHeaders (form) {
   const getLen = promisify(form.getLength).bind(form);
   const len = await getLen();
   return {
     ...form.getHeaders(),
-    'Content-Length': len,
-	"Authorization": "Bearer " + authorization
+    'Content-Length': len
   }
 }
 
-async function uploadFile(url, forms, fileForms, authorization) {
+async function uploadFile(url, forms, fileForms) {
     console.log(url);
     console.log(forms);
     console.log(fileForms);
     const form = buildForm(forms, fileForms);
-    const headers = await getFormHeaders(form, authorization);
+    const headers = await getFormHeaders(form);
     console.log(headers);
     return axios.post(url, form, {headers: headers,maxContentLength: Infinity})
 }
@@ -31363,14 +31362,16 @@ async function main() {
     const forms = core.getInput('forms');
     const formsMap = jsonToMap(forms);
     const fileForms = core.getInput('fileForms');
-	  const authorization = core.getInput('authorization');
     const fileFormsMap = jsonToMap(fileForms);
+	  const bearerAuthorization = core.getInput('bearerAuthorization');
+
+    formsMap.set("Authorization", "Bearer " + bearerAuthorization);
 
     console.log(forms);
     console.log(fileForms);
 
     // http request to external API
-    const response = await uploadFile(url, formsMap, fileFormsMap, authorization);
+    const response = await uploadFile(url, formsMap, fileFormsMap);
 
     const statusCode = response.status;
     const data = response.data;

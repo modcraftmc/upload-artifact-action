@@ -18,6 +18,9 @@ inputs:
   fileForms:
     description: Files to be transferred,such as 'file','image' etc. Use json format
     required: false
+  bearerAuthorization:
+    description: 'Bearer token for authorization'
+    required: false
 
 outputs:
   output:
