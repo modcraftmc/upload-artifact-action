@@ -35,7 +35,7 @@ async function main() {
       core.setOutput('output', outputJSON);
     }
   } catch (error) {
-    console.log("error : " + error);
+    console.log(error);
     core.setFailed(error.message);
   }
 }
